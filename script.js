@@ -1,5 +1,4 @@
-// API_KEY is now securely loaded from config.js which is ignored by git
-const API_KEY = config.API_KEY;
+const API_KEY = 'a4d0e35a98be0e3152546c31f2d585e0';
 const BASE_URL_WEATHER = 'https://api.openweathermap.org/data/2.5/weather';
 const BASE_URL_FORECAST = 'https://api.openweathermap.org/data/2.5/forecast';
 
