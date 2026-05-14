@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# IDE
+.vscode/
+
+# Build output (if using bundlers)
+dist/
+build/
+
+# Env files
+.env
+.env.local
+.env.development
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db

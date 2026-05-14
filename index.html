@@ -7,7 +7,13 @@
   <title>Weather app</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+    }
     /* Applying the refraction stroke to your p tag */
     .glass-text {
       -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
@@ -32,19 +38,23 @@
 </head>
 
 <body
-  class="bg-[url('../images/bg.jpg')] bg-cover bg-center min-h-screen bg-no-repeat p-6 flex flex-col items-center justify-center">
+  class="bg-[linear-gradient(135deg,#8E2DE2_0%,#4A00E0_100%)] min-h-screen p-6 flex flex-col items-center justify-center transition-all duration-1000 ease-in-out">
   <div class="max-w-sm md:max-w-4xl lg:max-w-5xl mx-auto w-full flex flex-col gap-6">
-    <div class="flex justify-between w-full">
+    <div class="flex justify-between w-full gap-4 items-center mb-4">
       <div
-        class="text-white mb-4 bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl h-12 w-12 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/20 transition-all hover:scale-105">
+        class="text-white bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl h-12 w-12 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/20 transition-all hover:scale-105 shrink-0">
         <i class="fa-solid fa-bars text-xl"></i>
       </div>
-      <div
-        class="mb-4 hover:w-36 hover:bg-white/20 transition-all duration-300 text-white bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl h-12 w-12 flex items-center justify-center rounded-full cursor-pointer overflow-hidden group">
-        <i class="fa-solid fa-location-dot group-hover:hidden text-xl"></i>
-        <span class="hidden group-hover:block text-sm font-semibold whitespace-nowrap px-3 tracking-wide">Change
-          City</span>
-      </div>
+
+      <!-- Liquid Glass Search Bar -->
+      <form id="search-form" class="flex-1 max-w-md w-full relative">
+        <input type="text" id="city-input" placeholder="Search City..."
+          class="w-full bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl rounded-full h-12 px-6 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 focus:bg-white/20 transition-all duration-300" />
+        <button type="submit"
+          class="absolute right-2 top-1/2 -translate-y-1/2 text-white/80 hover:text-white h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
     </div>
 
     <div class="flex flex-col md:flex-row gap-6 w-full">
@@ -57,7 +67,7 @@
         </p>
 
         <div class="w-56 mt-4 drop-shadow-2xl">
-          <img src="/images/weather.png" alt="Weather Status" class="w-full h-auto object-contain animate-float" />
+          <img id="weather-icon" src="/images/weather.png" alt="Weather Status" class="w-full h-auto object-contain animate-float" />
         </div>
         <div class="mt-auto">
           <p
@@ -73,7 +83,7 @@
           <div
             class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Humidity</p>
-            <p
+            <p id="humidity"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
               25%
             </p>
@@ -81,7 +91,7 @@
           <div
             class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Visibility</p>
-            <p
+            <p id="visibility"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
               15km
             </p>
@@ -89,7 +99,7 @@
           <div
             class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Feels</p>
-            <p
+            <p id="feels-like"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
               24°
             </p>
@@ -103,50 +113,16 @@
           </h3>
 
           <!-- 3-Hour Report Scrollable Area -->
-          <div
+          <div id="forecast-container"
             class="flex gap-4 overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <!-- Single Hourly Item -->
-            <div
-              class="flex flex-col items-center min-w-[70px] py-3 rounded-2xl bg-white/10 border border-white/20 transition-colors hover:bg-white/20 cursor-pointer shadow-inner">
-              <span class="text-xs font-semibold text-white/80">3 PM</span>
-              <img src="/images/sun.png" class="w-10 h-10 my-2 drop-shadow-md" />
-              <span class="text-xl font-bold text-white drop-shadow-md">26°</span>
-            </div>
-
-            <div
-              class="flex flex-col items-center min-w-[70px] py-3 transition-colors hover:bg-white/20 cursor-pointer rounded-2xl border border-transparent hover:border-white/20">
-              <span class="text-xs font-semibold text-white/60">6 PM</span>
-              <i class="fa-solid fa-cloud text-white/80 my-3 text-3xl drop-shadow-md"></i>
-              <span class="text-xl font-bold text-white/90">23°</span>
-            </div>
-
-            <div
-              class="flex flex-col items-center min-w-[70px] py-3 transition-colors hover:bg-white/20 cursor-pointer rounded-2xl border border-transparent hover:border-white/20">
-              <span class="text-xs font-semibold text-white/60">9 PM</span>
-              <i class="fa-solid fa-moon text-white/80 my-3 text-3xl drop-shadow-md"></i>
-              <span class="text-xl font-bold text-white/90">20°</span>
-            </div>
-
-            <div
-              class="flex flex-col items-center min-w-[70px] py-3 transition-colors hover:bg-white/20 cursor-pointer rounded-2xl border border-transparent hover:border-white/20">
-              <span class="text-xs font-semibold text-white/60">12 AM</span>
-              <i class="fa-solid fa-cloud-moon text-white/80 my-3 text-3xl drop-shadow-md"></i>
-              <span class="text-xl font-bold text-white/90">18°</span>
-            </div>
-
-            <div
-              class="flex flex-col items-center min-w-[70px] py-3 transition-colors hover:bg-white/20 cursor-pointer rounded-2xl border border-transparent hover:border-white/20">
-              <span class="text-xs font-semibold text-white/60">3 AM</span>
-              <i class="fa-solid fa-cloud-showers-heavy text-white/80 my-3 text-3xl drop-shadow-md"></i>
-              <span class="text-xl font-bold text-white/90">17°</span>
-            </div>
+            <!-- Dynamic forecast items will be injected here -->
           </div>
 
           <!-- Temperature Trend Graph (SVG) -->
           <div class="mt-4 pt-4 border-t border-white/10">
             <p class="text-xs font-semibold text-white/60 mb-2 ml-1 uppercase tracking-wider">Temperature Trend</p>
             <svg viewBox="0 0 400 100" class="w-full h-24 stroke-white/40 fill-transparent drop-shadow-lg">
-              <path d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" fill="none" stroke="url(#glassGradient)"
+              <path id="trend-path" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,40" fill="none" stroke="url(#glassGradient)"
                 stroke-width="4" stroke-linecap="round" />
               <defs>
                 <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -161,7 +137,7 @@
       </div>
     </div>
   </div>
-  <script src="app.js"></script>
+  <script src="script.js"></script>
 
 </body>
 
