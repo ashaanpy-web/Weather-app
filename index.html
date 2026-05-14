@@ -38,18 +38,25 @@
 </head>
 
 <body
-  class="bg-[linear-gradient(135deg,#8E2DE2_0%,#4A00E0_100%)] min-h-screen p-6 flex flex-col items-center justify-center transition-all duration-1000 ease-in-out">
-  <div class="max-w-sm md:max-w-4xl lg:max-w-5xl mx-auto w-full flex flex-col gap-6">
+  class="bg-[linear-gradient(135deg,#8E2DE2_0%,#4A00E0_100%)] min-h-screen p-6 flex flex-col items-center justify-center transition-all duration-1000 ease-in-out relative overflow-x-hidden overflow-y-auto">
+  
+  <!-- Dynamic Background Orbs for Glass Refraction -->
+  <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+    <div class="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] rounded-full bg-white/20 blur-[100px] animate-pulse mix-blend-overlay"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50rem] h-[50rem] rounded-full bg-white/10 blur-[120px] animate-pulse mix-blend-overlay" style="animation-delay: 2s;"></div>
+  </div>
+
+  <div class="max-w-sm md:max-w-4xl lg:max-w-5xl mx-auto w-full flex flex-col gap-6 z-10">
     <div class="flex justify-between w-full gap-4 items-center mb-4">
       <div
-        class="text-white bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl h-12 w-12 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/20 transition-all hover:scale-105 shrink-0">
+        class="text-white bg-white/20 border border-white/40 border-b-white/10 border-r-white/10 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] h-12 w-12 flex items-center justify-center rounded-full cursor-pointer hover:bg-white/30 transition-all hover:scale-105 shrink-0">
         <i class="fa-solid fa-bars text-xl"></i>
       </div>
 
       <!-- Liquid Glass Search Bar -->
       <form id="search-form" class="flex-1 max-w-md w-full relative">
         <input type="text" id="city-input" placeholder="Search City..."
-          class="w-full bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl rounded-full h-12 px-6 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 focus:bg-white/20 transition-all duration-300" />
+          class="w-full bg-white/20 border border-white/40 border-b-white/10 border-r-white/10 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] rounded-full h-12 px-6 text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-white/40 focus:bg-white/30 transition-all duration-300" />
         <button type="submit"
           class="absolute right-2 top-1/2 -translate-y-1/2 text-white/80 hover:text-white h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/20 transition-colors">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -60,7 +67,7 @@
     <div class="flex flex-col md:flex-row gap-6 w-full">
       <!-- Main Weather Box -->
       <div
-        class="w-full md:w-1/2 lg:w-5/12 rounded-3xl border border-white/20 bg-white/10 p-8 shadow-2xl backdrop-blur-md flex flex-col items-center justify-center transition-transform hover:scale-[1.02]">
+        class="w-full md:w-1/2 lg:w-5/12 rounded-3xl border border-white/40 border-b-white/10 border-r-white/10 bg-white/20 p-8 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl flex flex-col items-center justify-center transition-transform hover:scale-[1.02]">
         <p
           class="glass-text text-8xl font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
           25°
@@ -81,7 +88,7 @@
       <div class="w-full md:w-1/2 lg:w-7/12 flex flex-col gap-6">
         <div class="grid grid-cols-3 gap-4 w-full">
           <div
-            class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
+            class="bg-white/20 border border-white/40 border-b-white/10 border-r-white/10 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Humidity</p>
             <p id="humidity"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
@@ -89,7 +96,7 @@
             </p>
           </div>
           <div
-            class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
+            class="bg-white/20 border border-white/40 border-b-white/10 border-r-white/10 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Visibility</p>
             <p id="visibility"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
@@ -97,7 +104,7 @@
             </p>
           </div>
           <div
-            class="bg-white/10 border border-white/20 backdrop-blur-md shadow-2xl py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
+            class="bg-white/20 border border-white/40 border-b-white/10 border-r-white/10 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] py-6 rounded-3xl flex flex-col items-center justify-center transition-transform hover:scale-[1.05] cursor-default">
             <p class="text-white/70 text-sm font-semibold uppercase tracking-wider">Feels</p>
             <p id="feels-like"
               class="text-3xl mt-2 font-black tracking-tighter text-transparent bg-linear-to-b from-white/90 via-white/30 to-white/50 bg-clip-text drop-shadow-[0_2px_2px_rgba(255,255,255,0.4)]">
@@ -107,7 +114,7 @@
         </div>
 
         <div
-          class="w-full flex-1 rounded-3xl border border-white/20 bg-white/10 p-6 shadow-2xl backdrop-blur-xl transition-transform hover:scale-[1.02] flex flex-col justify-between">
+          class="w-full flex-1 rounded-3xl border border-white/40 border-b-white/10 border-r-white/10 bg-white/20 p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-transform hover:scale-[1.02] flex flex-col justify-between">
           <h3 class="text-white/80 text-sm font-bold uppercase tracking-widest mb-4 ml-2">
             Hourly Forecast
           </h3>
