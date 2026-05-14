@@ -11,6 +11,7 @@ build/
 
 # Env files
 .env
+config.js
 .env.local
 .env.development
 .env.production
