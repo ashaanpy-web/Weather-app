@@ -287,6 +287,11 @@ window.addEventListener('DOMContentLoaded', () => {
             async (error) => {
                 console.warn("Geolocation denied or failed. Loading default city.", error);
                 await loadWeatherForCity('New York');
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
             }
         );
     } else {
